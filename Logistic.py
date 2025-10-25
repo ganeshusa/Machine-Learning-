@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.datasets import make_blobs
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 #Step-1 Generate Toy(Dummy) Dataset
 
@@ -73,6 +74,18 @@ def train(X,y,max_iters=100,learning_rate=0.1):
     return theta
 
 
+def predict(X,theta):
+    h= hypothesis(X,theta)
+    predis= np.zeros((X.shape[0],1),dtype="int")
+    predis[h>0.5]=1
+
+    return predis
+
+def accuracy(X,y,theta):
+    predis=predict(X,theta)
+    return ((y==predis).sum())/X.shape[0]*100
+
+
 def addExtraColumns(X):
     if X.shape[1]== n_features:
         ones=np.ones((X.shape[0],1))
@@ -100,3 +113,29 @@ x1 = np.linspace(-3,3,6)
 x2=-(theta[0]+theta[1]*x1)/theta[2]
 plt.plot(x1,x2)
 plt.show()
+
+predict(Xt,theta)
+aT= accuracy(XT,yT,theta)
+at= accuracy(Xt,yt,theta)
+print(at)
+
+
+# now using library
+model= LogisticRegression()
+X,y = make_blobs(n_samples=2000, n_features=2,cluster_std=3, centers=2, random_state=42)
+model.fit(X,y)
+
+model.predict(X)
+
+model.score(X,y)
+
+#Multi class
+
+X,y =make_blobs(n_samples=2000, n_features=2,cluster_std=3, centers=2, random_state=42)
+plt.scatter(X[:,0], X[:,1], c=y,cmap="viridis")
+plt.show()
+
+model= LogisticRegression()
+model.fit(X,y)
+model.predict(X)
+model.score(X,y)

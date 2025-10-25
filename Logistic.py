@@ -69,6 +69,7 @@ def train(X,y,max_iters=100,learning_rate=0.1):
        theta= theta - learning_rate*grad
 
     plt.plot(error_list)
+    plt.show()
     return theta
 
 
@@ -90,4 +91,4 @@ yt=yt.reshape(-1,1)
 theta = train(XT,yT,max_iters=300,learning_rate=0.2)
 print(theta)
 
-print(theta)
+print("Learned theta\n" ,  theta)

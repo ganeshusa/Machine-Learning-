@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 #Step-1 Generate Toy(Dummy) Dataset
 
 X,y = make_blobs(n_samples=2000, n_features=2,cluster_std=3, centers=2, random_state=42)
-num_of_features=2
+n_features=2
 print(X.shape,y.shape)
 
 #Setp -2 Visualise DataSet
@@ -49,7 +49,7 @@ plt.show()
 
 
 def error(y,yp):
-    loss= -np.mean(y*(np.log(yp)+(1-y)*np.log(1-yp)))
+    loss= -np.mean(y*np.log(yp)+(1-y)*np.log(1-yp))
     return loss
 
 
@@ -59,7 +59,7 @@ def gradient(X,y,yp):
     return grad
 
 def train(X,y,max_iters=100,learning_rate=0.1):
-    theta = np.random.randn(num_of_features+1,1)
+    theta = np.random.randn(n_features+1,1)
     error_list = []
     for i in range(max_iters):
        yp= hypothesis(X,theta)
@@ -74,9 +74,9 @@ def train(X,y,max_iters=100,learning_rate=0.1):
 
 
 def addExtraColumns(X):
-    if X.shape[1]== num_of_features:
+    if X.shape[1]== n_features:
         ones=np.ones((X.shape[0],1))
-        X = np.hstack((X,ones))
+        X = np.hstack((ones,X))
 
     return X
 
@@ -92,3 +92,11 @@ theta = train(XT,yT,max_iters=300,learning_rate=0.2)
 print(theta)
 
 print("Learned theta\n" ,  theta)
+
+plt.scatter(XT[:,1], XT[:,2], c=yT,cmap="viridis")
+#plt.show()
+
+x1 = np.linspace(-3,3,6)
+x2=-(theta[0]+theta[1]*x1)/theta[2]
+plt.plot(x1,x2)
+plt.show()

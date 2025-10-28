@@ -1,1 +1,2 @@
-This is machine learning. Implemented machine larning from scratch for regression and calssification problem
+This is a machine learning algorithm implementation. The algorithm was implemented from scratch as well as using a library.
+
